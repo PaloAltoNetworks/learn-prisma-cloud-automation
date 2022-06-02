@@ -1,5 +1,5 @@
-# How to Build a Custom Prisma Cloud Defender AWS AMI
-A tutorial and set of scripts to help automate Prisma Cloud Defenders by building a Customer AWS AMI.
+# How to Build a Custom Prisma Cloud Defender Images
+A tutorial and set of scripts to help automate Prisma Cloud Defenders by building a Customer AWS AMI.  Additional tutorials & scripts for other CSPs may be added in the future.  Encourage others to contribute as well!
 
 ## Prereqs
 1. AWS Account
