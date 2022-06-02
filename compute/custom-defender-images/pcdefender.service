@@ -1,0 +1,10 @@
+[Unit]
+Description=Prisma Cloud Defender Install Script
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/usr/bin/pcdefender-install-aws-sm.sh
+
+[Install]
+WantedBy=multi-user.target
