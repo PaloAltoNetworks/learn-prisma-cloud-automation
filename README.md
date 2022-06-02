@@ -1,5 +1,5 @@
 # Learn - Prisma Cloud Automation Labs & Tutorials
-
+A set of tutorials to learn how to automate various Prisma Cloud tasks.
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) [![support](https://img.shields.io/badge/Support%20Level-Community-yellowgreen)](./SUPPORT.md)
 
