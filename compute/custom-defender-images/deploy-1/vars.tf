@@ -47,18 +47,18 @@ variable "tls_key_name" {
   type        = string
   description = "key name for tls private key pair"
 }
-variable "ecr_role_name" {
+variable "pc_defender_role_name" {
   type        = string
-  description = "Role for permissions to interact with ECR"
-  default     = "Custom-AWSECRInstanceUser"
+  description = "Role for permissions to interact with ECR & AWS Secret Manager"
+  default     = "Custom-AWSPCDefenderInstanceUser"
 }
-variable "ecr_profile_for_ec2" {
+variable "pc_defender_profile_for_ec2" {
   type        = string
-  description = "Role for permissions to interact with ECR"
-  default     = "ECR-EC2Profile1"
+  description = "Role for permissions to interact with ECR & AWS Secret Manager"
+  default     = "PCDefender-EC2Profile1"
 }
-variable "ecr_policy" {
+variable "pc_defender_policy" {
   type        = string
-  description = "Role for permissions to interact with ECR"
-  default     = "ECR-EC2Policy1"
-}
+  description = "Role for permissions to interact with ECR & AWS Secret Manager"
+  default     = "PCDefender-EC2Policy1"
+} 

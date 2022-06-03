@@ -9,7 +9,7 @@ sudo apt-get remove docker docker-engine docker.io containerd runc
 # Set up the repository
 sudo apt-get update
 
-sudo apt-get install \
+sudo apt-get install -y \
     ca-certificates \
     curl \
     gnupg \
@@ -25,27 +25,32 @@ echo \
 
 # Install Docker Engine
 sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io -y
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
-#Install unzip
-sudo apt install unzip
+# Install AWS CLI
+# Method via apt
+sudo apt install -y awscli
 
+# Alternative Method requires unzip and to use curl 
 # Install AWS CLI - Ref: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
+#sudo apt install unzip
+#curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+#unzip awscliv2.zip
+#sudo ./aws/install
 
-# Install Amazon ECR Docker Credential Helper
+# (OPTIONAL) Install Amazon ECR Docker Credential Helper
 sudo apt update
-sudo apt install amazon-ecr-credential-helper
+sudo apt install -y amazon-ecr-credential-helper
 
 # Setup Docker credentials
 sudo groupadd docker
 #sudo usermod -a -G docker $USER
 # If above does work, revert back to manually enter user
 sudo usermod -a -G docker ubuntu
-
 sudo chmod u+x /usr/bin/docker
+
+# Install jq & verify
+sudo apt install -y jq
 
 ##############################################
 ### END OF AUTOMATED SCRIPT ####
