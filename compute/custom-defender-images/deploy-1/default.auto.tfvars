@@ -2,7 +2,7 @@
 region          = "us-east-1"
 
 # Linux Virtual Machine
-vm_name                     = "spring-app"
+vm_name                     = "pc-ctnr-defender"
 instance_type               = "t2.micro"
 ami_type                    = "ubuntu-linux-2004"
 associate_public_ip_address = true
