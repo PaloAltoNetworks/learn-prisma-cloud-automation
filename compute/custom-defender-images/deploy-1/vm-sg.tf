@@ -2,7 +2,7 @@
 resource "aws_security_group" "aws-vm-sg" {
   name        = "${var.vm_name}-sg"
   description = "Allow incoming traffic to the EC2 Instance"
-  #vpc_id      = aws_vpc.vpc.id   #Optional if creating new VPC.  If commented out, will use default.
+  vpc_id      = aws_vpc.vpc.id   #Optional if creating new VPC.  If commented out, will use default.
   ingress {
     from_port   = 443
     to_port     = 443
