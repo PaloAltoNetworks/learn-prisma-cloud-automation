@@ -28,5 +28,6 @@ A tutorial and set of scripts to help automate Prisma Cloud Defenders by buildin
 - Review additional scripts and setup your secrets in AWS Secrets Manager
 - SSH into EC2 instance and create Prisma Cloud Defender install script and systemd service
 - Save as new AMI Image with tags
+- Deploy AMI IAM Enforcement Policy for Users
 - Deploy new EC2 instance with custom Prisma Cloud Defender AMI
 - Verify in Prisma Cloud
