@@ -25,7 +25,34 @@ A tutorial and set of scripts to help automate Prisma Cloud Defenders by buildin
 - Make any necessary adjustments to `default.auto.tfvars` file & deploy to your AWS environment
 - Create a new **Role** in Primsa Cloud called **Defender Manager** and assign it the **Cloud Provisioning Admin** Permission Group
 - Create a new Service Account in Prisma Cloud and assign it your new **Defender Manager** role and create and save keys
-- Review additional scripts and setup your secrets in AWS Secrets Manager
+
+
+### Review additional scripts and setup your secrets in AWS Secrets Manager
+   
+1. Open the `pcdefender-install-aws-sm.sh` file and review the code.
+2. Read the Instructions section and note that you will need to create the following 4 secrets (which will be pulled into the script as environment variables).
+    - `PC_USER`
+    - `PC_PASS`
+    - `PC_URL`
+    - `PC_SAN`
+3. When creating the secrets in AWSS Secrets Manager you will also need to set the paths as part of the secret.  The examples below are how the current install script is configured.  If you decide to change these, you will also need to update the install script to match your changes.
+    - `pc/defender/access-key`
+    - `pc/defender/secret-key`
+    - `pc/defender/pc-url`
+    - `pc/defender/pc-san`
+4. Login into AWS Console and search for **AWS Secrets Manager**
+5. **TODO - PROVIDE DETAIL HERE - Create your 4 secrets - 
+6. Attaching IAM Role to EC2 Instanct to pull secrets
+    - If you used the Terraform code, this step has already been completed for you, however you can also update the terraform code to make this more granular if desired.  
+    - For example, you could set the resouce field to something like this: 
+        - `"Resource": "arn:aws:secretsmanager:<REGION>:<ACCOUNT_ID>:secret:pc/defender/*"` 
+         
+Additional References: 
+- [How to safely use sensitive data at EC2 launch with Secret Manager?](https://filip5114.github.io/ec2-user-data-secret/)
+- [Secrets Manager IAM Role Examples](https://docs.aws.amazon.com/mediaconnect/latest/ug/iam-policy-examples-asm-secrets.html0)
+
+
+### Steps Continued
 - SSH into EC2 instance and create Prisma Cloud Defender install script and systemd service
 - Save as new AMI Image with tags
 - Deploy AMI IAM Enforcement Policy for Users
