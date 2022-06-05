@@ -3,24 +3,30 @@
 # This is a modified version of script here: https://github.com/PaloAltoNetworks/prisma-cloud-compute-sample-code/blob/main/deployment/shell/linux-container-defender.sh
 
 ### INSTRUCTIONS ###
-# The script requires four variables to authenticate with Prisma Cloud.
-# PC_USER, PC_PASS, PC_URL, PC_SAN
+# This script utilizes jq and AWS Secrets Manager
+# To avoid having to set sensitive values statically in this script, it is written to pull 4 secrets you can create in AWS Secrets Manager.
+# NOTE: Becasue it requires to fetch the secrets from AWS Secretes Manager,
+# you must also attach an IAM role to the EC2 instance that has proper permissions to fetch the secrets.  
+# If utilizing the GitHub tutorial this script was created in, the role is created for you via the terraform code.
+# Otherwise you will need to create your own IAM role and policy to attach to the EC2 instance.
 
-# This script additionally utilizes AWS Secrets Manager and jq
-# Becasue it utilizes AWS services directly, you must attach a role to the EC2 instance that has proper permissions to fetch the secrets
+### GATHER THE 4 VALUES OF YOUR SECRETS ###
+# 1) USERNAME and 2) PASSWORD if using Self Hosted Compute, OR 1) ACCESS_KEY and 2) SECRET_KEY if using Prisma Cloud Enterprise SaaS version.
+# 3) PC_URL from Compute > Manage > System > Utilities > Path to Console (i.e: #https://us-west1.cloud.twistlock.com/us-3-xxxxxxxxx)
+# 4) PC_SAN (i.e. us-west1.cloud.twistlock.com)
 
-# To use this script, instead of entering the 4 variables directly here, you will create 4 new secrets in AWS Secrets Manager with a path for each
-# If using SaaS, PC_USER and PC_PASS will be an access key and secret key.
-# PC_URL should be the exact value copied from Compute > Manage > System > Utilities > Path to Console
-# PC_URL="" #https://us-west1.cloud.twistlock.com/us-3-xxxxxxxxx
-# PC_SAN="" #us-west1.cloud.twistlock.com
+### CREATE THESE SECRETS AS KEY/VALUE PAIRS IN AWS SECRETS MANAGER.
+# NOTE: You can change the key paths to something else, however, you must ensure the VALUES further below match
+#####  KEY PATH  ####   |  ### VALUE ###
+# pc/defender/pc-user   | <YOUR_USERNAME_OR_ACCESS_KEY>
+# pc/defender/pc-pass   | <YOUR_PASSWORD_OR_SECRET_KEY>
+# pc/defender/pc-url    | <YOUR_PC_URL>
+# pc/defender/pc-san    | <YOUR_PC_SAN>
 
-# Each PATH must be set here.  Make sure it matches what you configure in Secrets Manager.
-# Recommed using a unique path (like a directory) for your Prisma Cloud secrets such as:
-
-### ONLY MODIFY THESE VALUES IF NEEDED ###
-PC_USER_PATH="pc/defender/access-key"
-PC_PASS_PATH="pc/defender/secret-key"
+### ENVIRONMENT VARIABLES USED BY THE SCRIPT ###
+### DO NOT MODIFY WHAT IS IN THE "" BELOW UNLESS YOU USED DIFFERENT KEY PATHS IN AWS SECRETS MANAGER THAN WHAT WAS SUGGESTED ABOVE ###
+PC_USER_PATH="pc/defender/pc-user"
+PC_PASS_PATH="pc/defender/pc-pass"
 PC_URL_PATH="pc/defender/pc-url"
 PC_SAN_PATH="pc/defender/pc-san"
 
