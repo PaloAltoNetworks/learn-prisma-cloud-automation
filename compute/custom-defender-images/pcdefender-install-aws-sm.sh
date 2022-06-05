@@ -11,20 +11,20 @@
 # Otherwise you will need to create your own IAM role and policy to attach to the EC2 instance.
 
 ### GATHER THE 4 VALUES OF YOUR SECRETS ###
-# 1) USERNAME and 2) PASSWORD if using Self Hosted Compute, OR 1) ACCESS_KEY and 2) SECRET_KEY if using Prisma Cloud Enterprise SaaS version.
+# 1) USERNAME and 2) PASSWORD if using Prisma Cloud Self Hosted Compute, OR 1) ACCESS_KEY and 2) SECRET_KEY if using the Enterprise SaaS version.
 # 3) PC_URL from Compute > Manage > System > Utilities > Path to Console (i.e: #https://us-west1.cloud.twistlock.com/us-3-xxxxxxxxx)
 # 4) PC_SAN (i.e. us-west1.cloud.twistlock.com)
 
 ### CREATE THESE SECRETS AS KEY/VALUE PAIRS IN AWS SECRETS MANAGER.
-# NOTE: You can change the key paths to something else, however, you must ensure the VALUES further below match
-#####  KEY PATH  ####   |  ### VALUE ###
-# pc/defender/pc-user   | <YOUR_USERNAME_OR_ACCESS_KEY>
-# pc/defender/pc-pass   | <YOUR_PASSWORD_OR_SECRET_KEY>
-# pc/defender/pc-url    | <YOUR_PC_URL>
-# pc/defender/pc-san    | <YOUR_PC_SAN>
+# NOTE: You can change the secret path & names to something else in AWS Secrets Manager, however, you must ensure the VALUES further below match
+## KEY ## |  ## VALUE ##                  | ## SECRET PATH/NAME ## |
+# PC_USER | <YOUR_USERNAME_OR_ACCESS_KEY> | pc/defender/pc-user    |
+# PC_PASS | <YOUR_PASSWORD_OR_SECRET_KEY> | pc/defender/pc-pass    |
+# PC_URL  | <YOUR_PC_URL>                 | pc/defender/pc-url     |
+# PC_SAN  | <YOUR_PC_SAN>.                | pc/defender/pc-san     |
 
 ### ENVIRONMENT VARIABLES USED BY THE SCRIPT ###
-### DO NOT MODIFY WHAT IS IN THE "" BELOW UNLESS YOU USED DIFFERENT KEY PATHS IN AWS SECRETS MANAGER THAN WHAT WAS SUGGESTED ABOVE ###
+### DO NOT MODIFY WHAT IS IN THE "" BELOW UNLESS YOU USED DIFFERENT SECRET PATH/NAMES IN AWS SECRETS MANAGER THAN WHAT WAS SUGGESTED ABOVE ###
 PC_USER_PATH="pc/defender/pc-user"
 PC_PASS_PATH="pc/defender/pc-pass"
 PC_URL_PATH="pc/defender/pc-url"
