@@ -30,7 +30,7 @@ A tutorial and set of scripts to help automate Prisma Cloud Defenders by buildin
 ### Review additional scripts and setup your secrets in AWS Secrets Manager
    
 1. Open the `pcdefender-install-aws-sm.sh` file in this repo's folder and review the instructions at the top of the script.
-2. Create 4 secrets in AWS Secrets Manager.  Note, we utilize using paths for your Keys as a good design suggestion to better manage secrets.    
+2. Create 4 secrets in AWS Secrets Manager.  Note, we utilize using paths for your Secret Names as a good design suggestion to better manage secrets.    
     
 | KEY | VALUE | SECRET NAME |
 |-----|-------|-------------|
@@ -39,16 +39,15 @@ A tutorial and set of scripts to help automate Prisma Cloud Defenders by buildin
 | `PC_URL` | <PC_URL> | `pc/defender/pc-url` |
 | `PC_SAN` | <PC_SAN> | `pc/defender/pc-san` |
 
-3. Login into AWS Console and search for **AWS Secrets Manager**
-4. **TODO - PROVIDE DETAIL HERE - Create your 4 secrets - 
-5. Attaching IAM Role to EC2 Instanct to pull secrets
-    - If you used the Terraform code, this step has already been completed for you, however you can also update the terraform code to make this more granular if desired.  
+3. To create these secrets, follow this helpful guide here, however skip the part about the role as we've already created that from the terraform code:
+- [How to safely use sensitive data at EC2 launch with Secret Manager?](https://filip5114.github.io/ec2-user-data-secret/)
+4. Regarding Attaching IAM Role to EC2 Instanct to pull secrets
+    - As mentioned, if you used the Terraform code, this step has already been completed for you, however you can also update the terraform code to make this more granular if desired.  
     - For example, you could set the resouce field to something like this: 
         - `"Resource": "arn:aws:secretsmanager:<REGION>:<ACCOUNT_ID>:secret:pc/defender/*"` 
          
 Additional References: 
-- [How to safely use sensitive data at EC2 launch with Secret Manager?](https://filip5114.github.io/ec2-user-data-secret/)
-- [Secrets Manager IAM Role Examples](https://docs.aws.amazon.com/mediaconnect/latest/ug/iam-policy-examples-asm-secrets.html0)
+- [Secrets Manager IAM Role Examples](https://docs.aws.amazon.com/mediaconnect/latest/ug/iam-policy-examples-asm-secrets.html)
 
 
 ### Steps Continued
