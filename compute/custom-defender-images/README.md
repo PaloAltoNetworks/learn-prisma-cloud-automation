@@ -4,8 +4,9 @@ A tutorial and set of scripts to help automate Prisma Cloud Defenders by buildin
 ## Prereqs
 1. AWS Account
 2. Prisma Cloud Enterprise license
-3. Terraform
-4. AWS CLI
+3. Onboarded AWS Account to Prisma Cloud
+4. Terraform
+5. AWS CLI
 
 ## Objectives
 1. Build an EC2 Instance with Terraform and initial setup script to install required software for your image
