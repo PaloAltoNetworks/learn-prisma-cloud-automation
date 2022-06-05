@@ -29,20 +29,19 @@ A tutorial and set of scripts to help automate Prisma Cloud Defenders by buildin
 
 ### Review additional scripts and setup your secrets in AWS Secrets Manager
    
-1. Open the `pcdefender-install-aws-sm.sh` file and review the code.
-2. Read the Instructions section and note that you will need to create the following 4 secrets (which will be pulled into the script as environment variables).
-    - `PC_USER`
-    - `PC_PASS`
-    - `PC_URL`
-    - `PC_SAN`
-3. When creating the secrets in AWSS Secrets Manager you will also need to set the paths as part of the secret.  The examples below are how the current install script is configured.  If you decide to change these, you will also need to update the install script to match your changes.
-    - `pc/defender/access-key`
-    - `pc/defender/secret-key`
-    - `pc/defender/pc-url`
-    - `pc/defender/pc-san`
-4. Login into AWS Console and search for **AWS Secrets Manager**
-5. **TODO - PROVIDE DETAIL HERE - Create your 4 secrets - 
-6. Attaching IAM Role to EC2 Instanct to pull secrets
+1. Open the `pcdefender-install-aws-sm.sh` file in this repo's folder and review the instructions at the top of the script.
+2. Create 4 secrets in AWS Secrets Manager.  Note, we utilize using paths for your Keys as a good design suggestion to better manage secrets.    
+    
+| KEY | VALUE |
+|-----|-------|
+| `pc/defender/pc-user` | <YOUR_USER_NAME> or <YOUR_ACCESS_KEY> |
+| `pc/defender/pc-pass` | <YOUR_PASSWORD> or <YOUR_SECRET_KEY> |
+| `pc/defender/pc-url`  | <PC_URL> |
+| `pc/defender/pc-san`  | <PC_SAN> |
+
+3. Login into AWS Console and search for **AWS Secrets Manager**
+4. **TODO - PROVIDE DETAIL HERE - Create your 4 secrets - 
+5. Attaching IAM Role to EC2 Instanct to pull secrets
     - If you used the Terraform code, this step has already been completed for you, however you can also update the terraform code to make this more granular if desired.  
     - For example, you could set the resouce field to something like this: 
         - `"Resource": "arn:aws:secretsmanager:<REGION>:<ACCOUNT_ID>:secret:pc/defender/*"` 
