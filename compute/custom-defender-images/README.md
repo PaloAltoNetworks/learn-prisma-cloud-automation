@@ -32,12 +32,12 @@ A tutorial and set of scripts to help automate Prisma Cloud Defenders by buildin
 1. Open the `pcdefender-install-aws-sm.sh` file in this repo's folder and review the instructions at the top of the script.
 2. Create 4 secrets in AWS Secrets Manager.  Note, we utilize using paths for your Keys as a good design suggestion to better manage secrets.    
     
-| KEY | VALUE |
-|-----|-------|
-| `pc/defender/pc-user` | <YOUR_USER_NAME> or <YOUR_ACCESS_KEY> |
-| `pc/defender/pc-pass` | <YOUR_PASSWORD> or <YOUR_SECRET_KEY> |
-| `pc/defender/pc-url`  | <PC_URL> |
-| `pc/defender/pc-san`  | <PC_SAN> |
+| KEY | VALUE | SECRET NAME |
+|-----|-------|-------------|
+| `PC_USER` | <YOUR_USER_NAME> or <YOUR_ACCESS_KEY> | `pc/defender/pc-user` |
+| `PC_PASS` | <YOUR_PASSWORD> or <YOUR_SECRET_KEY> | `pc/defender/pc-pass` |
+| `PC_URL` | <PC_URL> | `pc/defender/pc-url` |
+| `PC_SAN` | <PC_SAN> | `pc/defender/pc-san` |
 
 3. Login into AWS Console and search for **AWS Secrets Manager**
 4. **TODO - PROVIDE DETAIL HERE - Create your 4 secrets - 
