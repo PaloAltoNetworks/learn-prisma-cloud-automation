@@ -3,8 +3,8 @@
 # This is a modified version of script here: https://github.com/PaloAltoNetworks/prisma-cloud-compute-sample-code/blob/main/deployment/shell/linux-container-defender.sh
 
 ### INSTRUCTIONS ###
-# The script requires four variables to authenticate with Prisma Cloud.
-# PC_USER, PC_PASS, PC_URL, PC_SAN
+# The script requires one variable and 4 secrets to authenticate with Prisma Cloud.
+# PC_PATH
 
 # This script additionally utilizes AWS Secrets Manager and jq
 # Becasue it utilizes AWS services directly, you must attach a role to the EC2 instance that has proper permissions to fetch the secrets
@@ -19,23 +19,22 @@
 # Recommed using a unique path (like a directory) for your Prisma Cloud secrets such as:
 
 ### ONLY MODIFY THESE VALUES IF NEEDED ###
-PC_USER_PATH="pc/defender/access-key"
-PC_PASS_PATH="pc/defender/secret-key"
-PC_URL_PATH="pc/defender/pc-url"
-PC_SAN_PATH="pc/defender/pc-san"
-
+# PC_USER_PATH="pc/defender/PC_USER"
+# PC_PASS_PATH="pc/defender/PC_PASS"
+# PC_URL_PATH="pc/defender/PC_URL"
+# PC_SAN_PATH="pc/defender/PC_SAN"
+PC_PATH="pc/defender"
 
 ### DO NOT MODIFY BELOW ###
 
 # Automatically retrieve the REGION the EC2 instance is running by accessing metadata server
 TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
 REGION=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')
-
 # 'secret-id' paths must match what you configure in your AWS Secrets Manager.
-PC_USER="$(aws secretsmanager get-secret-value --region $REGION --secret-id $PC_USER_PATH --query SecretString --output text | jq -r .PC_USER)"
-PC_PASS="$(aws secretsmanager get-secret-value --region $REGION --secret-id $PC_PASS_PATH --query SecretString --output text | jq -r .PC_PASS)"
-PC_URL="$(aws secretsmanager get-secret-value --region $REGION --secret-id $PC_URL_PATH --query SecretString --output text | jq -r .PC_URL)"
-PC_SAN="$(aws secretsmanager get-secret-value --region $REGION --secret-id $PC_SAN_PATH --query SecretString --output text | jq -r .PC_SAN)"
+PC_USER="$(aws secretsmanager get-secret-value --region $REGION --secret-id $PC_PATH --query SecretString --output text | jq -r .PC_USER)"
+PC_PASS="$(aws secretsmanager get-secret-value --region $REGION --secret-id $PC_PATH --query SecretString --output text | jq -r .PC_PASS)"
+PC_URL="$(aws secretsmanager get-secret-value --region $REGION --secret-id $PC_PATH --query SecretString --output text | jq -r .PC_URL)"
+PC_SAN="$(aws secretsmanager get-secret-value --region $REGION --secret-id $PC_PATH --query SecretString --output text | jq -r .PC_SAN)"
 
 # Placeholder for proxy, however not yet tested.  See here: https://github.com/PaloAltoNetworks/prisma-cloud-compute-sample-code/blob/main/deployment/shell/linux-container-defender.sh
 # May also require modification to the AUTH_DATA & curl command to add --data field - TBD
