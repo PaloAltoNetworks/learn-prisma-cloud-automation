@@ -46,13 +46,41 @@ A tutorial and set of scripts to help automate Prisma Cloud Defenders by buildin
     - As mentioned, if you used the Terraform code, this step has already been completed for you, however you can also update the terraform code to make this more granular if desired.  
     - For example, you could set the resouce field to something like this: 
         - `"Resource": "arn:aws:secretsmanager:<REGION>:<ACCOUNT_ID>:secret:pc/defender/*"` 
-         
+5. To verify your EC2 instance can access your secrets, SSH into your EC2 instance
+6. Test that your EC2 instance can acccess your new secrets.  For example:
+```
+aws secretsmanager get-secret-value --region us-east-1 --secret-id pc/defender/pc-url
+```
+> Example Output:
+```
+{
+    "ARN": "arn:aws:secretsmanager:us-east-1:533854785587:secret:pc/defender/pc-url-3u2Mb8",
+    "Name": "pc/defender/pc-url",
+    "VersionId": "d7e9bebb-233e-4ba1-ac67-d407e07163db",
+    "SecretString": "{\"PC_URL\":\"https://us-east1.cloud.twistlock.com/us-2-158256885\"}",
+    "VersionStages": [
+        "AWSCURRENT"
+    ],
+    "CreatedDate": 1654404957.694
+}
+```
+Or with a command that only filters out the Secret String
+```
+aws secretsmanager get-secret-value --region us-east-1 --secret-id pc/defender/pc-url --query SecretString --output text
+```
+> Example Output:
+```
+{"PC_URL":"https://us-east1.cloud.twistlock.com/us-2-158256885"}
+```
+
 Additional References: 
 - [Secrets Manager IAM Role Examples](https://docs.aws.amazon.com/mediaconnect/latest/ug/iam-policy-examples-asm-secrets.html)
 
+### Create Prisma Cloud Defender install script and systemd service
+1. Make sure you are SSH'd into your EC2 instance
+
 
 ### Steps Continued
-- SSH into EC2 instance and create Prisma Cloud Defender install script and systemd service
 - Save as new AMI Image with tags
 - Deploy AMI IAM Enforcement Policy for Users
 - Deploy new EC2 instance with custom Prisma Cloud Defender AMI
