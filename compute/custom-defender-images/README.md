@@ -73,15 +73,62 @@ aws secretsmanager get-secret-value --region us-east-1 --secret-id pc/defender/p
 {"PC_URL":"https://us-east1.cloud.twistlock.com/us-2-158256885"}
 ```
 
-Additional References: 
-- [Secrets Manager IAM Role Examples](https://docs.aws.amazon.com/mediaconnect/latest/ug/iam-policy-examples-asm-secrets.html)
+Or, just the Value of your secret, using jq to help us filter that out
+```
+aws secretsmanager get-secret-value --region us-east-1 --secret-id pc/defender/pc-url --query SecretString --output text | jq -r .PC_URL
+```
+> Example Output:
+```
+https://us-east1.cloud.twistlock.com/us-2-158256885
+```
+
+Filtering out only the value, as shown above is exactly what out script will be doing.
+
 
 ### Create Prisma Cloud Defender install script and systemd service
-1. Make sure you are SSH'd into your EC2 instance
+1. If not already, SSH into your EC2 instance
+2. Change to root user
+```
+sudo -i
+```
+3. Create the new script file
+```
+vi /usr/bin/pcdefender-install-aws-sm.sh
+```
+- Copy and paste the entire `pcdefender-install-aws-sm.sh` file contents from this repo's folder.
+- Save it.
+- Make it executable.
+```
+chmod +x /usr/bin/pcdefender-install-aws-sm.sh 
+```
 
+4. Create service file and enable it.
+```
+vi /lib/systemd/system/pcdefender.service
+```
+- Copy and paste the entire `pcdefender.service` file contents from this repo's folder.
+- Save it.
+- Reload the daemon service
+```
+systemctl daemon-reload 
+```
+- And enable the service to start on system boot.
+```
+systemctl enable pcdefender.service 
+```
+> Example Output:
+```
+Created symlink /etc/systemd/system/multi-user.target.wants/pcdefender.service → /lib/systemd/system/pcdefender.service.
+```
 
 ### Steps Continued
 - Save as new AMI Image with tags
 - Deploy AMI IAM Enforcement Policy for Users
 - Deploy new EC2 instance with custom Prisma Cloud Defender AMI
 - Verify in Prisma Cloud
+
+
+
+### Additional References: 
+- [Secrets Manager IAM Role Examples](https://docs.aws.amazon.com/mediaconnect/latest/ug/iam-policy-examples-asm-secrets.html)
+
