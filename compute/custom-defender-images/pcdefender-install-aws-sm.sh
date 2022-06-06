@@ -34,7 +34,10 @@ PC_SAN_PATH="pc/defender/pc-san"
 ### DO NOT MODIFY BELOW ###
 
 # Automatically retrieve the REGION the EC2 instance is running by accessing metadata server
-TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
+# IMDSv1 would only require a direct curl command, however should not use this due to security concerns
+# REGION=$(curl http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')
+# IMDSv2 is preferred method:
+TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
 REGION=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')
 
 # 'secret-id' paths must match what you configure in your AWS Secrets Manager.
