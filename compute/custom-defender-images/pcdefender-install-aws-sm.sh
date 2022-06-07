@@ -3,17 +3,24 @@
 # This is a modified version of script here: https://github.com/PaloAltoNetworks/prisma-cloud-compute-sample-code/blob/main/deployment/shell/linux-container-defender.sh
 
 ### INSTRUCTIONS ###
+
 # The script requires one variable and 4 secrets to authenticate with Prisma Cloud.
 # PC_PATH
 
-# This script additionally utilizes AWS Secrets Manager and jq
-# Becasue it utilizes AWS services directly, you must attach a role to the EC2 instance that has proper permissions to fetch the secrets
 
-# To use this script, instead of entering the 4 variables directly here, you will create 4 new secrets in AWS Secrets Manager with a path for each
-# If using SaaS, PC_USER and PC_PASS will be an access key and secret key.
-# PC_URL should be the exact value copied from Compute > Manage > System > Utilities > Path to Console
-# PC_URL="" #https://us-west1.cloud.twistlock.com/us-3-xxxxxxxxx
-# PC_SAN="" #us-west1.cloud.twistlock.com
+### GATHER THE 4 VALUES OF YOUR SECRETS ###
+# 1) USERNAME and 2) PASSWORD if using Prisma Cloud Self Hosted Compute, OR 1) ACCESS_KEY and 2) SECRET_KEY if using the Enterprise SaaS version.
+# 3) PC_URL from Compute > Manage > System > Utilities > Path to Console (i.e: #https://us-west1.cloud.twistlock.com/us-3-xxxxxxxxx)
+# 4) PC_SAN (i.e. us-west1.cloud.twistlock.com)
+
+### CREATE THESE SECRETS AS KEY/VALUE PAIRS IN AWS SECRETS MANAGER.
+# NOTE: You can change the secret path & names to something else in AWS Secrets Manager, however, you must ensure the VALUES further below match
+## KEY ## |  ## VALUE ##                  | ## SECRET PATH/NAME ## |
+# PC_USER | <YOUR_USERNAME_OR_ACCESS_KEY> | pc/defender/pc-user    |
+# PC_PASS | <YOUR_PASSWORD_OR_SECRET_KEY> | pc/defender/pc-pass    |
+# PC_URL  | <YOUR_PC_URL>                 | pc/defender/pc-url     |
+# PC_SAN  | <YOUR_PC_SAN>.                | pc/defender/pc-san     |
+
 
 # Each PATH must be set here.  Make sure it matches what you configure in Secrets Manager.
 # Recommed using a unique path (like a directory) for your Prisma Cloud secrets such as:
@@ -25,10 +32,14 @@
 # PC_SAN_PATH="pc/defender/PC_SAN"
 PC_PATH="pc/defender"
 
+
 ### DO NOT MODIFY BELOW ###
 
 # Automatically retrieve the REGION the EC2 instance is running by accessing metadata server
-TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
+# IMDSv1 would only require a direct curl command, however should not use this due to security concerns
+# REGION=$(curl http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')
+# IMDSv2 is preferred method:
+TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
 REGION=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')
 # 'secret-id' paths must match what you configure in your AWS Secrets Manager.
 PC_USER="$(aws secretsmanager get-secret-value --region $REGION --secret-id $PC_PATH --query SecretString --output text | jq -r .PC_USER)"
