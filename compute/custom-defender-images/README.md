@@ -121,8 +121,14 @@ systemctl enable pcdefender.service
 Created symlink /etc/systemd/system/multi-user.target.wants/pcdefender.service → /lib/systemd/system/pcdefender.service.
 ```
 
+### Create new Custom AMI Image
+1. From your AWS Instances page, right click your instance ID and select **Image and Tempaltes > Create Image**
+2. Give it an Image name like `pc-defender-v1.0`
+3. Click **Add tag** and provide key/value pair names such as: `image` : `defender`
+4. Click **Create Image**
+
 ### Steps Continued
-- Save as new AMI Image with tags
+
 - Deploy AMI IAM Enforcement Policy for Users
 - Deploy new EC2 instance with custom Prisma Cloud Defender AMI
 - Verify in Prisma Cloud
