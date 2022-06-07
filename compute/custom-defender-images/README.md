@@ -127,10 +127,24 @@ Created symlink /etc/systemd/system/multi-user.target.wants/pcdefender.service â
 3. Click **Add tag** and provide key/value pair names such as: `image` : `defender`
 4. Click **Create Image**
 
-### Steps Continued
+### Deploy AMI IAM Enforcement Policy for Users
+TODO - Add Detail here
 
-- Deploy AMI IAM Enforcement Policy for Users
-- Deploy new EC2 instance with custom Prisma Cloud Defender AMI
+### Deploy new EC2 instance with custom Prisma Cloud Defender AMI
+TODO - Add more detail here.  May not work as is in some environments.
+1. Obtain your new **AMI ID**
+2. Set the required environment variables from the below command
+3. Create an EC2 instance with your custom AMI image.
+```
+aws ec2 run-instances --image-id $CUSTOM_AMI_ID \
+    --instance-type t2.micro \
+    --iam-instance-profile Name=PCDefender-EC2Profile1 \
+    --key-name $KEY_NAME \
+    --security-group-ids $SG_ID \
+    --region $REGION \
+    --profile $USER_PROFILE
+```
+### Steps Continued
 - Verify in Prisma Cloud
 
 
