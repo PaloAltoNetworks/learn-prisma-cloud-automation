@@ -153,7 +153,7 @@ aws ec2 run-instances --image-id $CUSTOM_AMI_ID \
 ```
 
 ### Verification
-1. After the instance completes initialization, ssh into with your key-pair and verify the pcdefender service ran successfully.
+1. After the instance completes initialization, ssh into it with your key-pair and verify the **pcdefender.service** ran successfully.
 ```
 systemctl status pcdefender.service
 ```
