@@ -131,23 +131,56 @@ Created symlink /etc/systemd/system/multi-user.target.wants/pcdefender.service ‚
 TODO - Add Detail here
 
 ### Deploy new EC2 instance with custom Prisma Cloud Defender AMI
-TODO - Add more detail here.  May not work as is in some environments.
-1. Obtain your new **AMI ID**
-2. Set the required environment variables from the below command
-3. Create an EC2 instance with your custom AMI image.
+1. Obtain your new **AMI ID** and the values of the **key-pair-name, subnet-id, and sg-id** created from running the initial terraform code.
+2. Create the following environment variables, inserting your values between the `""` for each.
+```
+CUSTOM_AMI_ID=""
+KEY_NAME=""
+SUBNET_ID=""
+SG_ID=""
+REGION=""
+```
+
+3. Create a new EC2 instance with your custom AMI image.
 ```
 aws ec2 run-instances --image-id $CUSTOM_AMI_ID \
     --instance-type t2.micro \
     --iam-instance-profile Name=PCDefender-EC2Profile1 \
     --key-name $KEY_NAME \
+    --subnet-id $SUBNET_ID \
     --security-group-ids $SG_ID \
     --region $REGION \
-    --profile $USER_PROFILE
 ```
-### Steps Continued
-- Verify in Prisma Cloud
 
+### Verification
+1. After the instance completes initialization, ssh into with your key-pair and verify the pcdefender service ran successfully.
+```
+systemctl status pcdefender.service
+```
+> Example Output:
+```
+ubuntu@ip-10-0-0-190:~$ systemctl status pcdefender.service 
+‚óè pcdefender.service - Prisma Cloud Defender Install Script
+     Loaded: loaded (/lib/systemd/system/pcdefender.service; enabled; vendor preset: enabled)
+     Active: inactive (dead) since Wed 2022-06-08 03:27:28 UTC; 5min ago
+    Process: 468 ExecStart=/usr/bin/pcdefender-install-aws-sm.sh (code=exited, status=0/SUCCESS)
+   Main PID: 468 (code=exited, status=0/SUCCESS)
 
+Jun 08 03:26:40 ip-10-0-0-190 pcdefender-install-aws-sm.sh[887]:    | | \ \ /\ / / / __| __| |/ _ \ / __| |/ /
+Jun 08 03:26:40 ip-10-0-0-190 pcdefender-install-aws-sm.sh[887]:    | |  \ V  V /| \__ \ |_| | (_) | (__|   <
+Jun 08 03:26:40 ip-10-0-0-190 pcdefender-install-aws-sm.sh[887]:    |_|   \_/\_/ |_|___/\__|_|\___/ \___|_|\_\
+Jun 08 03:27:05 ip-10-0-0-190 pcdefender-install-aws-sm.sh[887]: Performing system checks for defender mode...
+Jun 08 03:27:05 ip-10-0-0-190 pcdefender-install-aws-sm.sh[887]: Loading defender images.
+Jun 08 03:27:25 ip-10-0-0-190 pcdefender-install-aws-sm.sh[1481]: Loaded image: twistlock/private:defender_22_01_882
+Jun 08 03:27:26 ip-10-0-0-190 pcdefender-install-aws-sm.sh[887]: Installing Defender.
+Jun 08 03:27:28 ip-10-0-0-190 pcdefender-install-aws-sm.sh[887]: Twistlock Defender installed successfully.
+Jun 08 03:27:28 ip-10-0-0-190 pcdefender-install-aws-sm.sh[828]: Installation completed, deleting temporary files.
+Jun 08 03:27:28 ip-10-0-0-190 systemd[1]: pcdefender.service: Succeeded.
+```
+
+2. Verify you see the new defender in Prisma Cloud by going to **Compute > Manage > Defenders > Manage > Defenders** 
+
+## Congratulations - You created a Custom Image with Prisma Cloud Defender
 
 ### Additional References: 
 - [Secrets Manager IAM Role Examples](https://docs.aws.amazon.com/mediaconnect/latest/ug/iam-policy-examples-asm-secrets.html)
