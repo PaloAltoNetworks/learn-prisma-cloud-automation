@@ -39,7 +39,7 @@ variable "root_volume_type" {
 #  default     = "gp2"
 #}
 variable "ssh_cidr_blocks" {
-  type        = list
+  type        = list(any)
   description = "list of strings of cidr blocks allowing ssh connections"
   default     = ["0.0.0.0/0"]
 }
@@ -61,4 +61,12 @@ variable "pc_defender_policy" {
   type        = string
   description = "Role for permissions to interact with ECR & AWS Secret Manager"
   default     = "PCDefender-EC2Policy1"
-} 
+}
+variable "ami_tag_key" {
+  type        = string
+  description = "Custom AMI tag key"
+}
+variable "ami_tag_value" {
+  type        = string
+  description = "Custom AMI tag value"
+}
