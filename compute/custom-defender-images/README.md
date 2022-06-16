@@ -1,5 +1,18 @@
-# How to Build a Custom Prisma Cloud Defender Image
-A tutorial and set of scripts to help automate Prisma Cloud Defenders by building a Customer AWS AMI.  Additional tutorials & scripts for other CSPs may be added in the future.  Encourage others to contribute as well!
+# Build a Custom Prisma Cloud Defender Image
+A tutorial and sample code to help automate and enforce deployments of Prisma Cloud Defenders.
+
+### Why?
+- Automated and simplified security is stronger security.
+- Using Prisma Cloud Defender base images significantly eases and strengthens the security of your applications being deployed in cloud-native environments.
+
+### How?
+- Create a custom Prisma Cloud Defender base image for your own environment.  
+- Enforce the use of the Prisma Cloud defender base image to ensure the defender will launch at every instance bootup with no additional steps required. 
+   
+#### >>> That's automated security.
+
+### What use case will this tutorial cover?
+As of this writing, the tutorial is initially only covering a single use case with building a Custom AWS AMI.  The same logic however can be applied to other Cloud environments and services where Prisma Cloud Defenders may be used.  Highly encourage others to contribute as well!
 
 ## Prereqs
 1. AWS Account
@@ -41,7 +54,7 @@ A tutorial and set of scripts to help automate Prisma Cloud Defenders by buildin
 | `PC_SAN` | <PC_SAN> | `pc/defender/pc-san` |
 
 3. To create these secrets, follow this helpful guide here, however skip the part about the role as we've already created that from the terraform code:
-- [How to safely use sensitive data at EC2 launch with Secret Manager?](https://filip5114.github.io/ec2-user-data-secret/)
+      - [How to safely use sensitive data at EC2 launch with Secret Manager?](https://filip5114.github.io/ec2-user-data-secret/)
 4. Regarding Attaching IAM Role to EC2 Instanct to pull secrets
     - As mentioned, if you used the Terraform code, this step has already been completed for you, however you can also update the terraform code to make this more granular if desired.  
     - For example, you could set the resouce field to something like this: 
@@ -180,8 +193,13 @@ Jun 08 03:27:28 ip-10-0-0-190 systemd[1]: pcdefender.service: Succeeded.
 
 2. Verify you see the new defender in Prisma Cloud by going to **Compute > Manage > Defenders > Manage > Defenders** 
 
-## Congratulations - You created a Custom Image with Prisma Cloud Defender
+## Congratulations
+- You created a Custom Image with Prisma Cloud Defender
+- You created an image tagging and IAM policy to enforce the use of the image
+- As a bonus you also used a Secrets Manager to secure your sensitive credentials 
 
-### Additional References: 
+## Simplified and Automated security that PROTECTS your workloads!  That's the power of Primsa Cloud!
+
+#### Additional References: 
 - [Secrets Manager IAM Role Examples](https://docs.aws.amazon.com/mediaconnect/latest/ug/iam-policy-examples-asm-secrets.html)
 
