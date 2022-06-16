@@ -3,6 +3,7 @@ A tutorial and sample code to help automate and enforce deployments of Prisma Cl
 
 ### Why?
 - Automated and simplified security is stronger security.
+- Defenders PROTECT your applications.  Whereby agentless scanning offers no protection, only visibility of issues.
 - Using Prisma Cloud Defender base images significantly eases and strengthens the security of your applications being deployed in cloud-native environments.
 
 ### How?
