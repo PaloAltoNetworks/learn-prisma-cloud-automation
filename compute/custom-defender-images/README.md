@@ -29,19 +29,19 @@ As of this writing, the tutorial is initially only covering a single use case wi
 5. Launch new EC2 instance with your custom Prisma Cloud Defender AMI
 
 ### Future Enhancements
-- Add Packer with Provisioner steps to automate image build process
+- Add [Packer](https://learn.hashicorp.com/collections/packer/aws-get-started) with Provisioner steps to automate image build process
 - Add CI tool and steps to automate entire workflow
 
 ## Steps
 
-### 
-- Clone repo
-- Make any necessary adjustments to `default.auto.tfvars` file & deploy to your AWS environment
-- Create a new **Role** in Primsa Cloud called **Defender Manager** and assign it the **Cloud Provisioning Admin** Permission Group
-- Create a new Service Account in Prisma Cloud and assign it your new **Defender Manager** role and create and save keys
+### 01 - Setup
+1. Clone this repo
+2. Make any necessary adjustments to `default.auto.tfvars` file & deploy to your AWS environment
+3. Create a new **Role** in Primsa Cloud called **Defender Manager** and assign it the **Cloud Provisioning Admin** Permission Group
+4. Create a new Service Account in Prisma Cloud and assign it your new **Defender Manager** role and create and save keys
 
 
-### Review additional scripts and setup your secrets in AWS Secrets Manager
+### 02 - Review additional scripts and setup your secrets in AWS Secrets Manager
    
 1. Open the `pcdefender-install-aws-sm.sh` file in this repo's folder and review the instructions at the top of the script.
 2. Create 4 secrets in AWS Secrets Manager.  Note, we utilize using paths for your Secret Names as a good design suggestion to better manage secrets.    
@@ -98,7 +98,7 @@ https://us-east1.cloud.twistlock.com/us-2-158256885
 Filtering out only the value, as shown above is exactly what out script will be doing.
 
 
-### Create Prisma Cloud Defender install script and systemd service
+### 03 - Create Prisma Cloud Defender install script and systemd service
 1. If not already, SSH into your EC2 instance
 2. Change to root user
 ```
@@ -134,16 +134,16 @@ systemctl enable pcdefender.service
 Created symlink /etc/systemd/system/multi-user.target.wants/pcdefender.service → /lib/systemd/system/pcdefender.service.
 ```
 
-### Create new Custom AMI Image
+### 04 - Create new Custom AMI Image
 1. From your AWS Instances page, right click your instance ID and select **Image and Tempaltes > Create Image**
 2. Give it an Image name like `pc-defender-v1.0`
 3. Click **Add tag** and provide key/value pair names such as: `image` : `defender`
 4. Click **Create Image**
 
-### Deploy AMI IAM Enforcement Policy for Users
+### 05 - Deploy AMI IAM Enforcement Policy for Users
 TODO - Add Detail here
 
-### Deploy new EC2 instance with custom Prisma Cloud Defender AMI
+### 06 - Deploy new EC2 instance with custom Prisma Cloud Defender AMI
 1. Obtain your new **AMI ID** and the values of the **key-pair-name, subnet-id, and sg-id** created from running the initial terraform code.
 2. Create the following environment variables, inserting your values between the `""` for each.
 ```
@@ -165,7 +165,7 @@ aws ec2 run-instances --image-id $CUSTOM_AMI_ID \
     --region $REGION \
 ```
 
-### Verification
+### 07 - Verification
 1. After the instance completes initialization, ssh into it with your key-pair and verify the **pcdefender.service** ran successfully.
 ```
 systemctl status pcdefender.service
