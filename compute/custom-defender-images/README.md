@@ -211,7 +211,7 @@ aws ec2 run-instances --image-id $CUSTOM_AMI_ID \
 - You created an image tagging and IAM policy to enforce the use of the image
 - As a bonus you also used a Secrets Manager to secure your sensitive credentials 
 
-## Simplified and Automated security that PROTECTS your workloads!  That's the power of Primsa Cloud!
+## Simplified and Automated security that PROTECTS your workloads!  That's the power of Prisma Cloud!
 
 #### Additional References: 
 - [Secrets Manager IAM Role Examples](https://docs.aws.amazon.com/mediaconnect/latest/ug/iam-policy-examples-asm-secrets.html)
