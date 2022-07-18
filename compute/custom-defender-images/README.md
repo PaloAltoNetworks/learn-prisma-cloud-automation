@@ -2,6 +2,7 @@
 A tutorial and sample code to help automate and enforce deployments of Prisma Cloud Defenders.
 
 ### Why?
+- After building a base image, it can be deployed infinite number of times, avoiding having to run deployment scripts after deployment.
 - Automated and simplified security is stronger security.
 - Defenders PROTECT your applications.  Whereby agentless scanning offers no protection, only visibility of issues.
 - Using Prisma Cloud Defender base images significantly eases and strengthens the security of your applications being deployed in cloud-native environments.
@@ -193,7 +194,18 @@ Jun 08 03:27:28 ip-10-0-0-190 systemd[1]: pcdefender.service: Succeeded.
 ```
 
 2. Verify you see the new defender in Prisma Cloud by going to **Compute > Manage > Defenders > Manage > Defenders** 
-
+   
+3. To verify the ability to launch more than one instance with no other changes, repeat the exact same CLI command and verification steps again.
+```
+aws ec2 run-instances --image-id $CUSTOM_AMI_ID \
+    --instance-type t2.micro \
+    --iam-instance-profile Name=PCDefender-EC2Profile1 \
+    --key-name $KEY_NAME \
+    --subnet-id $SUBNET_ID \
+    --security-group-ids $SG_ID \
+    --region $REGION \
+```
+    
 ## Congratulations
 - You created a Custom Image with Prisma Cloud Defender
 - You created an image tagging and IAM policy to enforce the use of the image
