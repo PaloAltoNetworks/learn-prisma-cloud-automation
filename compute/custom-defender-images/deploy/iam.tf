@@ -30,7 +30,7 @@ resource "aws_iam_policy" "ec2-launch-policy" {
         Action: [
           "ec2:RunInstances",
           "ec2:TerminateInstances"
-          ]
+          ],
         Resource: [
           "arn:aws:ec2:${var.region}:${data.aws_caller_identity.current.account_id}:instance/*",
           "arn:aws:ec2:${var.region}:${data.aws_caller_identity.current.account_id}:key-pair/*",
@@ -46,7 +46,7 @@ resource "aws_iam_policy" "ec2-launch-policy" {
         Action: [
           "ec2:RunInstances",
           "ec2:TerminateInstances"
-          ]
+          ],
         Resource: "arn:aws:ec2:${var.region}::image/ami-*",
         Condition: {
           StringEquals: {
