@@ -27,7 +27,10 @@ resource "aws_iam_policy" "ec2-launch-policy" {
       {
         Sid: "ActionsRequiredtoRunInstancesInVPC",
         Effect: "Allow",
-        Action: "ec2:RunInstances",
+        Action: [
+          "ec2:RunInstances",
+          "ec2:TerminateInstances"
+          ]
         Resource: [
           "arn:aws:ec2:${var.region}:${data.aws_caller_identity.current.account_id}:instance/*",
           "arn:aws:ec2:${var.region}:${data.aws_caller_identity.current.account_id}:key-pair/*",
@@ -40,7 +43,10 @@ resource "aws_iam_policy" "ec2-launch-policy" {
       {
         Sid: "LaunchingEC2withAMIsAndTags",
         Effect: "Allow",
-        Action: "ec2:RunInstances",
+        Action: [
+          "ec2:RunInstances",
+          "ec2:TerminateInstances"
+          ]
         Resource: "arn:aws:ec2:${var.region}::image/ami-*",
         Condition: {
           StringEquals: {
